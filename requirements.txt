@@ -123,3 +123,4 @@ Werkzeug==3.1.3
 widgetsnbextension==4.0.13
 Gunicorn
 filetype
+magic
