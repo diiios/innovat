@@ -2,7 +2,7 @@ import os
 
 class Config(object):
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///:innovat.db'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:1386@localhost:5432/innovat'    
+    SQLALCHEMY_DATABASE_URI = 'postgresql://innovatsql_user:1x6sYfRAraHJTz1ScpOSkAY3je6nRhFq@dpg-d2d5k11r0fns73ai5i20-a.frankfurt-postgres.render.com/innovatsql'    
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
