@@ -1,0 +1,709 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="description">
+  
+  <!-- <div class="left-description">
+    <h1>Проект: какой-то</h1>
+    <p>Описание:</p>
+    <p>Описание — это краткая аннотация содержимого страницы и сайта...</p>
+  </div>
+  <div class="right-description">
+    <img src="{{ url_for('static', filename='images/main-img.jpeg') }}" alt="" class="main-img">
+  </div> -->
+
+  <div class="description-wrapper">
+    <div class="description-slider" id="description-slider">
+      <div class="description-slide">
+        <div class="description-slide-content">
+        <div class="description-slide-left">
+          <div>
+          <h1>Название мероприятия или проекта</h1>
+          
+          <p>Краткое описание проекта или мероприятия, подводка для основного текста, более детальное представление о содержании</p>
+        </div>
+        <div>
+          <button>Подробнее  &nbsp;→</button>
+          </div>
+        </div>
+        <div class="description-slide-right">
+          <img src="{{ url_for('static', filename='images/desk.png') }}">
+        </div>
+        </div>
+      </div>
+
+      <div class="description-slide">
+        <div class="description-slide-content">
+        <div class="description-slide-left">
+          <div>
+          <h1>Название мероприятия или проекта</h1>
+          
+          <p>Краткое описание проекта или мероприятия, подводка для основного текста, более детальное представление о содержании</p>
+        </div>
+        <div>
+          <button>Подробнее  &nbsp;→</button>
+          </div>
+        </div>
+        <div class="description-slide-right">
+          <img src="{{ url_for('static', filename='images/desk.png') }}">
+        </div>
+        </div>
+      </div>
+      
+
+
+            
+
+
+            
+      <!-- <div class="description-slide"><img src="https://placehold.co/500x300?text=Slide+2"></div>
+      <div class="description-slide"><img src="https://placehold.co/500x300?text=Slide+3"></div>
+      <div class="description-slide"><img src="https://placehold.co/500x300?text=Slide+4"></div>
+      <div class="description-slide"><img src="https://placehold.co/500x300?text=Slide+5"></div> -->
+    </div>
+
+  <div class="description-dots" id="description-dots"></div>
+  </div>
+
+</div>
+
+
+
+<div class="main-box">
+  <div class="about">
+  <h1>О нас</h1>
+  <p>Новый сайт, задача которого ориентировать педагога в мире российских цифровых ресурсов</p>
+</div>
+
+<div class="purpose-info">
+  <div class="purpose">
+    <h1>Цель</h1>
+    <p>текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст </p>
+  </div>
+  <div class="goal">
+    <h1>Задачи</h1>
+    <p>текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст текст </p>
+
+  </div>
+  <div class="rezult">
+    <div>
+      <h1>Результат</h1>
+      <p>Тестовая диагностика цифровой компетности педагога (по результату диагностики педагогу предлагаются конкретные разделы ресурса)</p>
+    </div>
+    <div><button onclick="window.location='{{ url_for('test.open_test') }}'" style="cursor: pointer;">Пройти тест &nbsp;→</button></div>
+  </div>
+</div>
+
+
+  <br>
+  <h1 style="margin-bottom: 45px;">Анонсы мероприятий</h1>
+  <div class="event-slider-wrapper">
+    <div class="event-slider" id="event-slider">
+    {% for event in events %}
+    
+      <div class="event-slide" onclick="window.location='{{ event.link }}'" style="cursor: pointer;">
+        <div>
+          {% if event.end_date %}
+            <span>{{ event.start_date.strftime('%d.%m.%Y') }} – {{ event.end_date.strftime('%d.%m.%Y') }}</span>
+          {% else %}
+            <span>{{ event.start_date.strftime('%d.%m.%Y') }}</span>
+          {% endif %}
+
+          {% set places = event.place.split(',') %}
+          {% for place in places %}
+            <span>{{ place.strip() }}</span>
+          {% endfor %}
+                          {% if session.get('is_admin') %}
+            <form method="POST" action="{{ url_for('event.delete', id=event.id) }}">
+              <button type="submit" class="mini-detele" onclick="return confirm('Удалить комментарий?')">X</button>
+            </form>
+          {% endif %}
+        </div>
+
+        <div>
+          <p>{{ event.text }}</p>
+        </div>
+
+        <div>
+          <h2>{{ event.slogan }}</h2>
+          <img src="{{ url_for('static', filename='uploads/events/' ~ event.photo) }}" alt="Фото мероприятия">
+        </div>
+
+      </div>
+
+    {% endfor %}
+
+
+<!-- </div> -->
+
+
+</div>
+   <div class="event-buttons sliver-controlls">
+  <button id="event-prevBtn" class="prev-slider"></button>
+  <button id="event-nextBtn" class="next-slider"></button>
+</div>
+</div>
+
+
+  <h1 style="margin-bottom: 40px;">Вдохновляемся идеями</h1>
+  <div class="ideas-slider-wrapper">
+    <div class="ideas-slider" id="ideas-slider">
+      {% for idea in ideas %}
+      <div class="ideas-slide">
+        <div>
+          <!-- <h1>Название проекта или ресурса</h1> -->
+          <h1>{{ idea.name }}</h1>
+          <p>{{ idea.description }}</p>
+       
+            <button onclick="location.href='{{ url_for('idea.open_one', id=idea.id) }}'">
+              <span>Узнать подробнее</span>
+              <span>→</span>
+            </button>
+             
+        </div>
+        <div>
+          <img src="{{ url_for('static', filename='images/idea.png') }}" alt="">
+        </div>
+    
+      </div>
+      {% endfor %}
+        
+      <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Массив путей к иконкам
+    const icons = [
+      "{{ url_for('static', filename='images/idea-1.png') }}",
+      "{{ url_for('static', filename='images/idea-2.png') }}",
+      "{{ url_for('static', filename='images/idea-3.png') }}",
+      "{{ url_for('static', filename='images/icons/icon4.png') }}",
+      "{{ url_for('static', filename='images/icons/icon5.png') }}"
+    ];
+
+    // Получаем все слайды
+    const slides = document.querySelectorAll('.ideas-slide');
+
+    // Проходим по слайдам и назначаем иконки
+    slides.forEach((slide, index) => {
+      const img = slide.querySelector('img');
+      if (img) {
+        img.src = icons[index % icons.length]; // если слайдов больше, иконки повторяются
+      }
+    });
+  });
+</script>
+
+</div>
+
+  <!-- <div class="event-dots" id="event-dots"></div> -->
+     <div class="ideas-buttons sliver-controlls">
+      <a href="{{ url_for('idea.open') }}">В банк идей</a>
+  <button id="ideas-prevBtn" class="prev-slider"></button>
+  <button id="ideas-nextBtn" class="next-slider"></button>
+</div>
+  </div>
+
+<!-- </div> -->
+      <br>
+  <h1 style="margin-bottom: 40px;">Погружаемся в цифровые инструменты</h1>
+  <div class="tools-slider-wrapper">
+    <div class="tools-slider" id="tools-slider">
+
+{% for tool_section in tool_sections %}
+<div class="tools-slide">
+  <div>
+    <h2>{{ tool_section.name }}</h2>
+    <img src="{{ url_for('static', filename='uploads/tools/' ~ tool_section.icon) }}" alt="" class="top-ph">
+  </div>
+
+  <div class="tools-slide-content">
+    <p>{{ tool_section.description }}</p>
+
+    <div class="tools-slide-footer">
+      <img src="{{ url_for('static', filename='images/tools-l.png') }}" alt=""
+           onclick="location.href='{{ url_for('tool.open_section', section_id=tool_section.id) }}'"
+           class="bot-ph">
+    </div>
+  </div>
+</div>
+{% endfor %}
+  </div>
+
+<!-- </div> -->
+
+
+</div>
+   <div class="tools-buttons sliver-controlls">
+    <a href="{{ url_for('tool.open') }}" >Ко всем ресурсам</a>
+  <button id="tools-prevBtn" class="prev-slider"></button>
+  <button id="tools-nextBtn" class="next-slider"></button>
+</div>
+
+
+
+      <br>
+  <h1 style="margin-bottom: 40px;">Продвигаемся в освоении ресурсов</h1>
+  <div class="res-slider-wrapper">
+    <div class="res-slider" id="res-slider">
+
+      {% for res in reses %}
+  <div class="res-slide">
+    <div class="res-content">
+    <img src="{{ url_for('static', filename='uploads/resources/{}/{}'.format(res.id, res.photo)) }}" alt="Изображение ресурса">
+
+    <h1>{{ res.name }}</h1>
+    <h2> {{ res.dop }} </h2>
+    <p> {{ res.description }} </p>
+    </div>
+    <a href="{{ url_for('resource.open_one', id=res.id) }}">
+      <button onclick="">Пройти пробный урок &nbsp;→</button>
+    </a>
+  
+  </div>
+
+  {% endfor %}
+
+
+    <!-- <div class="res-slide">
+    <img src="{{ url_for('static', filename='images/res.png') }}" alt="">
+    <h1>Figma</h1>
+    <h2>онлайн-сервис для разработки интерфейсов и прототипирования</h2>
+    <p>Используется для создания упрощённых прототипов интерфейсов и детальной проработки дизайна интерфейсов мобильных приложений, веб-сайтов, корпоративных порталов</p>
+    <button>Пройти пробный урок &nbsp;→</button>
+  
+  </div>
+    <div class="res-slide">
+    <img src="{{ url_for('static', filename='images/res.png') }}" alt="">
+    <h1>Figma</h1>
+    <h2>онлайн-сервис для разработки интерфейсов и прототипирования</h2>
+    <p>Используется для создания упрощённых прототипов интерфейсов и детальной проработки дизайна интерфейсов мобильных приложений, веб-сайтов, корпоративных порталов</p>
+    <button>Пройти пробный урок &nbsp;→</button>
+  
+  </div>
+    <div class="res-slide">
+    <img src="{{ url_for('static', filename='images/res.png') }}" alt="">
+    <h1>Figma</h1>
+    <h2>онлайн-сервис для разработки интерфейсов и прототипирования</h2>
+    <p>Используется для создания упрощённых прототипов интерфейсов и детальной проработки дизайна интерфейсов мобильных приложений, веб-сайтов, корпоративных порталов</p>
+    <button>Пройти пробный урок &nbsp;→</button>
+  
+  </div>
+    <div class="res-slide">
+    <img src="{{ url_for('static', filename='images/res.png') }}" alt="">
+    <h1>Figma</h1>
+    <h2>онлайн-сервис для разработки интерфейсов и прототипирования</h2>
+    <p>Используется для создания упрощённых прототипов интерфейсов и детальной проработки дизайна интерфейсов мобильных приложений, веб-сайтов, корпоративных порталов</p>
+    <button>Пройти пробный урок &nbsp;→</button>
+  
+  </div> -->
+  
+  </div>
+
+<!-- </div> -->
+
+
+</div>
+   <div class="res-buttons sliver-controlls">
+    <a href="{{ url_for('resource.open') }}">Ко всем урокам</a>
+  <button id="res-prevBtn" class="prev-slider"></button>
+  <button id="res-nextBtn" class="next-slider"></button>
+</div>
+</div>
+  <br>
+
+
+</div>
+<br><br><br><br>
+
+</div>
+
+  
+
+
+<script>
+  // Ждем полной загрузки страницы и всех ресурсов
+  window.addEventListener('load', () => {
+    const slider = document.getElementById('description-slider');
+    const slides = document.querySelectorAll('.description-slide');
+    const dotsContainer = document.getElementById('description-dots');
+
+    // Если элементов нет - прекращаем выполнение
+    if (!slider || slides.length === 0 || !dotsContainer) return;
+
+    const visibleSlides = 1;
+    const totalSlides = slides.length;
+
+    // Рассчитываем ширину слайда только после загрузки страницы
+    let slideWidth = slides[0].offsetWidth + 20;
+
+function recalculateWidthAndUpdate() {
+  slideWidth = slides[0].offsetWidth + 20;
+  updateSlider(); // Чтобы текущий слайд подстроился
+}
+
+window.addEventListener('resize', () => {
+  recalculateWidthAndUpdate();
+});
+
+    let currentIndex = 0;
+    let autoTimer = null;
+
+    // Создаем точки навигации
+    for (let i = 0; i <= totalSlides - visibleSlides; i++) {
+      const dot = document.createElement('span');
+      dot.classList.add('description-dot');
+      if (i === 0) dot.classList.add('description-active');
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        updateSlider();
+        resetTimer();
+      });
+      dotsContainer.appendChild(dot);
+    }
+
+    function updateDots() {
+      const dots = document.querySelectorAll('.description-dot');
+      dots.forEach(dot => dot.classList.remove('description-active'));
+      const activeIndex = currentIndex % (totalSlides - visibleSlides + 1);
+      if (dots[activeIndex]) {
+        dots[activeIndex].classList.add('description-active');
+      }
+    }
+
+    function updateSlider() {
+      slider.style.transition = 'transform 0.5s ease-in-out';
+      slider.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+      updateDots();
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % (totalSlides - visibleSlides + 1);
+      updateSlider();
+      resetTimer();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + (totalSlides - visibleSlides + 1)) % (totalSlides - visibleSlides + 1);
+      updateSlider();
+      resetTimer();
+    }
+
+    // Инициализация слайдера
+    updateSlider();
+
+    // Запускаем таймер с небольшой задержкой для гарантии
+  });
+</script>
+<!-- <script>
+window.addEventListener('load', () => {
+
+  function createSlider({
+    sliderId,
+    slideClass,
+    prevBtnId,
+    nextBtnId,
+    visibleSlides
+  }) {
+    const slider = document.getElementById(sliderId);
+    const slides = slider?.querySelectorAll(`.${slideClass}`);
+    const prevBtn = document.getElementById(prevBtnId);
+    const nextBtn = document.getElementById(nextBtnId);
+
+    if (!slider || !slides || slides.length === 0) return;
+
+    const gap = 20; // px
+    let currentIndex = 0;
+
+    function getSlideStep() {
+      const slideWidth = slides[0].offsetWidth;
+      const gapValue = parseInt(getComputedStyle(slider).gap) || gap;
+      return slideWidth + gapValue;
+    }
+
+    function updateSlider() {
+      const step = getSlideStep();
+      slider.style.transform = `translateX(-${currentIndex * step}px)`;
+
+      const maxIndex = slides.length - visibleSlides;
+
+      // Обновить состояние кнопок
+      prevBtn.classList.toggle('disabled', currentIndex <= 0);
+      nextBtn.classList.toggle('disabled', currentIndex >= maxIndex);
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex -= visibleSlides;
+      if (currentIndex < 0) currentIndex = 0;
+      updateSlider();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex += visibleSlides;
+      const maxIndex = slides.length - visibleSlides;
+      if (currentIndex > maxIndex) currentIndex = Math.max(0, maxIndex);
+      updateSlider();
+    });
+
+    window.addEventListener('resize', updateSlider);
+    updateSlider();
+  }
+
+  // Инициализируем слайдеры
+  createSlider({
+    sliderId: 'event-slider',
+    slideClass: 'event-slide',
+    prevBtnId: 'event-prevBtn',
+    nextBtnId: 'event-nextBtn',
+    visibleSlides: 3
+  });
+
+  createSlider({
+    sliderId: 'ideas-slider',
+    slideClass: 'ideas-slide',
+    prevBtnId: 'ideas-prevBtn',
+    nextBtnId: 'ideas-nextBtn',
+    visibleSlides: 2
+  });
+
+  createSlider({
+    sliderId: 'tools-slider',
+    slideClass: 'tools-slide',
+    prevBtnId: 'tools-prevBtn',
+    nextBtnId: 'tools-nextBtn',
+    visibleSlides: 4
+  });
+
+    createSlider({
+    sliderId: 'res-slider',
+    slideClass: 'res-slide',
+    prevBtnId: 'res-prevBtn',
+    nextBtnId: 'res-nextBtn',
+    visibleSlides: 3
+  });
+
+});
+</script> -->
+
+<!-- <script>
+window.addEventListener('load', () => {
+  function createSlider({
+    sliderId,
+    slideClass,
+    prevBtnId,
+    nextBtnId,
+    getVisibleSlides // функция, возвращающая количество видимых слайдов
+  }) {
+    const slider = document.getElementById(sliderId);
+    const slides = slider?.querySelectorAll(`.${slideClass}`);
+    const prevBtn = document.getElementById(prevBtnId);
+    const nextBtn = document.getElementById(nextBtnId);
+
+    if (!slider || !slides || slides.length === 0) return;
+
+    const gap = 20;
+    let currentIndex = 0;
+
+    function getSlideStep() {
+      const slideWidth = slides[0].offsetWidth;
+      const gapValue = parseInt(getComputedStyle(slider).gap) || gap;
+      return slideWidth + gapValue;
+    }
+
+    function updateSlider() {
+      const visibleSlides = getVisibleSlides();
+      const step = getSlideStep();
+
+      const maxIndex = Math.max(0, slides.length - visibleSlides);
+      if (currentIndex > maxIndex) currentIndex = maxIndex; // <-- фикс обрезки
+
+      slider.style.transform = `translateX(-${currentIndex * step}px)`;
+
+      prevBtn.classList.toggle('disabled', currentIndex <= 0);
+      nextBtn.classList.toggle('disabled', currentIndex >= maxIndex);
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex -= getVisibleSlides();
+      if (currentIndex < 0) currentIndex = 0;
+      updateSlider();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex += getVisibleSlides();
+      const maxIndex = Math.max(0, slides.length - getVisibleSlides());
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      updateSlider();
+    });
+
+    window.addEventListener('resize', updateSlider);
+    updateSlider();
+  }
+
+  // Количество видимых слайдов при разных размерах окна
+  function getEventVisibleSlides() {
+    return window.innerWidth <= 1100 ? 2 : 3;
+  }
+
+  createSlider({
+    sliderId: 'event-slider',
+    slideClass: 'event-slide',
+    prevBtnId: 'event-prevBtn',
+    nextBtnId: 'event-nextBtn',
+    getVisibleSlides: () => {
+      // if (window.innerWidth <= 700) return 1;
+      if (window.innerWidth <= 1100) return 2;
+      return 3;
+    }
+  });
+  // Остальные слайдеры (при желании тоже адаптируй)
+  createSlider({
+    sliderId: 'ideas-slider',
+    slideClass: 'ideas-slide',
+    prevBtnId: 'ideas-prevBtn',
+    nextBtnId: 'ideas-nextBtn',
+    getVisibleSlides: () => window.innerWidth <= 1000 ? 1 : 2
+  });
+
+  createSlider({
+    sliderId: 'tools-slider',
+    slideClass: 'tools-slide',
+    prevBtnId: 'tools-prevBtn',
+    nextBtnId: 'tools-nextBtn',
+      getVisibleSlides: () => {
+    if (window.innerWidth <= 1100) return 3;
+    return 4;
+  }
+  });
+
+createSlider({
+  sliderId: 'res-slider',
+  slideClass: 'res-slide',
+  prevBtnId: 'res-prevBtn',
+  nextBtnId: 'res-nextBtn',
+  getVisibleSlides: () => {
+    if (window.innerWidth <= 1100) return 2;
+    return 3;
+  }
+});
+});
+</script>
+
+
+ -->
+
+<script>
+window.addEventListener('load', () => {
+  function createSlider({
+    sliderId,
+    slideClass,
+    prevBtnId,
+    nextBtnId,
+    getVisibleSlides // функция, возвращающая количество видимых слайдов
+  }) {
+    const slider = document.getElementById(sliderId);
+    const slides = slider?.querySelectorAll(`.${slideClass}`);
+    const prevBtn = document.getElementById(prevBtnId);
+    const nextBtn = document.getElementById(nextBtnId);
+
+    if (!slider || !slides || slides.length === 0) return;
+
+    const gap = 20;
+    let currentIndex = 0;
+
+    function getSlideStep() {
+      const slideWidth = slides[0].offsetWidth;
+      const gapValue = parseInt(getComputedStyle(slider).gap) || gap;
+      return slideWidth + gapValue;
+    }
+
+    function updateSlider() {
+      const visibleSlides = getVisibleSlides();
+      const step = getSlideStep();
+
+      const maxIndex = Math.max(0, slides.length - visibleSlides);
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+      slider.style.transform = `translateX(-${currentIndex * step}px)`;
+
+      prevBtn.classList.toggle('disabled', currentIndex <= 0);
+      nextBtn.classList.toggle('disabled', currentIndex >= maxIndex);
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex -= getVisibleSlides();
+      if (currentIndex < 0) currentIndex = 0;
+      updateSlider();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex += getVisibleSlides();
+      const maxIndex = Math.max(0, slides.length - getVisibleSlides());
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      updateSlider();
+    });
+
+    window.addEventListener('resize', updateSlider);
+    updateSlider();
+  }
+
+  // Создание слайдеров с поддержкой мобильной версии (1 слайд до 800px)
+  createSlider({
+    sliderId: 'event-slider',
+    slideClass: 'event-slide',
+    prevBtnId: 'event-prevBtn',
+    nextBtnId: 'event-nextBtn',
+    getVisibleSlides: () => {
+      if (window.innerWidth <= 800) return 1;
+      if (window.innerWidth <= 1100) return 2;
+      return 3;
+    }
+  });
+
+  createSlider({
+    sliderId: 'ideas-slider',
+    slideClass: 'ideas-slide',
+    prevBtnId: 'ideas-prevBtn',
+    nextBtnId: 'ideas-nextBtn',
+    getVisibleSlides: () => {
+      if (window.innerWidth <= 800) return 1;
+      return 2;
+    }
+  });
+
+  createSlider({
+    sliderId: 'tools-slider',
+    slideClass: 'tools-slide',
+    prevBtnId: 'tools-prevBtn',
+    nextBtnId: 'tools-nextBtn',
+    getVisibleSlides: () => {
+      if (window.innerWidth <= 800) return 1;
+      if (window.innerWidth <= 1100) return 3;
+      return 4;
+    }
+  });
+
+  createSlider({
+    sliderId: 'res-slider',
+    slideClass: 'res-slide',
+    prevBtnId: 'res-prevBtn',
+    nextBtnId: 'res-nextBtn',
+    getVisibleSlides: () => {
+      if (window.innerWidth <= 800) return 1;
+      if (window.innerWidth <= 1100) return 2;
+      return 3;
+    }
+  });
+});
+</script>
+
+
+
+
+{% endblock %}
