@@ -1,0 +1,257 @@
+
+
+.main-box h1 {
+    display: inline-block;
+    margin-bottom: 5px;
+
+}
+
+.main-box  {
+    height: auto;
+    padding: 0px 200px;
+        text-align: center;
+}
+
+.tool-block {
+    border: 2px solid rgba(128, 128, 128, 0.26);
+
+width: 400px;
+    /*height: 350px;*/
+    background-color: rgba(216, 239, 246, 0.8);
+    margin: 30px;
+    border-radius: 20px;
+    display: flex;
+    text-align: center !important;
+    flex-direction: column;
+}
+
+.tool-block img {
+width: 400px;
+    border-radius: 20px;
+    height: 280px;
+        object-fit: cover;
+}
+
+
+
+.tools-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap
+}
+
+
+
+
+.like, .dislike{
+    width: 20px;
+    height: 20px;
+}
+
+/*.votes {*/
+/*  margin-top: 12px;*/
+/*  display: flex;*/
+/*  !*gap: 8px;*!*/
+/*    position: absolute;*/
+/*    !*bottom: 10px;*!*/
+/*  align-items: center;*/
+/*    !*bottom: 10px !important;*!*/
+
+/*  font-size: 16px;*/
+/*}*/
+
+/* .votes button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  transition: transform 0.2s ease;
+}
+
+
+
+.votes span {
+  min-width: 20px;
+  text-align: center;
+}
+ */
+
+.info-idea {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* текст сверху, votes снизу */
+  flex-grow: 1;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+
+.tools-slide {
+  /* flex: 0 0 calc((100% - 100px) / 4); ширина слайда = (ширина контейнера - 2*gap) / 3 */
+  height: 200px;
+  border-radius: 20px;
+  /* border: 1px solid #e5e5e5; */
+  background: #edf5fb;
+  /* text-align: center;
+  line-height: 250px; */
+  padding-bottom: 10px;
+  user-select: none;
+  margin: 20px 10px;
+}
+
+
+.tools-slide div {
+  padding: 0px;
+  margin: 0px;
+}
+
+.tools-slide div:first-child {
+  width: 100%;
+      display: flex
+;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    
+}
+
+.tools-slide h2 {
+    font-size: 17px;
+    margin-left: 30px;
+    margin-top: 30px;
+    font-size: large;
+}
+
+.tools-slide p {
+  font-size: 14px;
+  margin: 20px 30px 20px 30px;
+}
+
+
+.top-ph {
+    height: 53px !important;
+    margin-right: 15px;
+    margin-top: 17px;
+    height: auto;
+    position: relative;
+}
+
+
+
+.tools-slide {
+  position: relative; /* добавляем */
+  /* остальной твой CSS без изменений */
+  /* flex: 0 0 calc((100% - 100px) / 4); */
+  height: auto;
+  border-radius: 20px;
+  width: 290px !important;
+
+  background: #edf5fb;
+  padding-bottom: 20px;
+  user-select: none;
+}
+
+
+.tools-slide-content .main-img {
+  width: 230px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+  
+.bot-ph {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 30px; /* или любой размер */
+  cursor: pointer;
+  z-index: 10; /* чтобы быть сверху текста */
+}
+
+
+
+
+.one-tool-block {
+
+    margin: 10px;
+    border-radius: 20px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+
+
+      position: relative; /* добавляем */
+      /* остальной твой CSS без изменений */
+      /* flex: 0 0 calc((100% - 100px) / 4); */
+      height: auto;
+      border-radius: 20px;
+      width: 290px !important;
+
+      background: #edf5fb;
+      padding-bottom: 20px;
+      user-select: none;
+}
+
+.one-tool-block img {
+width: 240;
+margin: 25px;
+margin-top: 63px;
+margin-bottom: 5px;
+    /* border-radius: 20px; */
+    /* height: 280px; */
+        object-fit: cover;
+}
+
+.one-tool-block p {
+    display: inline-block;
+margin: 9px;
+font-weight: 400;
+margin-bottom: 3px;
+}
+
+.tool-block p {
+    display: inline-block;
+margin: 10px;
+
+}
+
+
+.section-ph-one {
+      position: absolute;
+    top: 13px;
+    right: 13px;
+    width: 40px;
+    cursor: pointer;
+    z-index: 10;
+    margin: 0px !important;
+}
+
+.one-tool-block .tool-button {
+    border-radius: 20px;
+    padding: 8px 18px;
+    /* font-size: 16px; */
+    font-size: large;
+    color: #4ba9dc;
+    background-color: #fff;
+    border: none;
+    margin: 10px 25px;
+    
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    min-width: 180px;
+    margin-bottom: 0px;
+}
+
+.one-tool-block .tool-button .text {
+    flex-grow: 1;
+    text-align: left;
+
+}
+
+
+.one-tool-block .tool-button .arrow {
+    flex-shrink: 0;
+}

@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Инструменты {% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
+
+{% endblock %}
+
+{% block activePart1 %} {% endblock %}
+{% block activePart2 %} active-part {% endblock %}
+{% block activePart3 %} {% endblock %}
+
+{% block content %}
+<div class="nav">
+  <a href="{{ url_for('main.index') }}">Главная > </a>
+  <a href="#"> Инструкции к ресурсам. Погружаемся в цифровые инструменты </a>
+</div>
+
+<div class="main-box">
+
+  <h1>Цифровые инструменты</h1>
+
+  <div class="tools-container">
+
+    <div class="tools-container">
+{% for section in sections %}
+      <div class="tools-slide">
+  <div>
+    <h2>{{ section.name }}</h2>
+    <img src="{{ url_for('static', filename='uploads/tools/' ~ section.icon) }}" alt="" class="top-ph">
+  </div>
+
+  <div class="tools-slide-content">
+        <img src="{{ url_for('static', filename='uploads/tools/' ~ section.photo) }}" alt="" class="main-img">
+
+    <p>{{ section.description }}</p>
+
+    <div class="tools-slide-footer">
+      <img src="{{ url_for('static', filename='images/tools-l.png') }}" alt=""
+           onclick="location.href='{{ url_for('tool.open_section', section_id=section.id) }}'"
+           class="bot-ph">
+    </div>
+  </div>
+          {% if session.get('is_admin') %}
+            <form method="POST" action="{{ url_for('tool.delete_section', section_id=section.id) }}" onsubmit="event.stopPropagation(); return confirm('Удалить раздел вместе со всеми инструментами и комментариями?')">
+              <button type="submit" class="mini-detele">Удалить раздел</button>
+            </form>
+          {% endif %}
+</div>
+
+{% endfor %}
+
+    </div>
+
+  </div>
+
+</div>
+<br><br>
+{% endblock %}

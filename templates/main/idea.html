@@ -1,0 +1,211 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Просмотр идеи - {{ idea.name }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ideas.css') }}">
+{% endblock %}
+{% block activePart1 %} active-part {% endblock %}
+{% block activePart2 %} {% endblock %}
+{% block activePart3 %} {% endblock %}
+
+
+{% block content %}
+<div class="nav">
+  <a href="{{ url_for('main.index') }}">Главная > </a>
+  <a href="{{ url_for('idea.open') }}"> Банк образовательных практик. Вдохновляемся идеями > </a>
+  <a href="#">{{ idea.name }}</a>
+</div>
+<div class="main-box">
+  <br><br>
+  <div class="one-idea">
+    <div class="pdf-viewer-container pdf-idea-one">
+
+<div class="pdf-viewer-container pdf-idea-one">
+
+  <iframe src="{{ url_for('static', filename='uploads/ideas/files/' ~ idea.file) }}" 
+          title="Просмотр PDF: {{ idea.name }}" 
+          class="pdf-same-file pdf-viewer-desktop">
+    Ваш браузер не поддерживает встроенный просмотр PDF.
+    Пожалуйста, <a href="{{ url_for('static', filename='uploads/ideas/files/' ~ idea.file) }}">скачайте файл</a>.
+  </iframe>
+
+  <div class="pdf-viewer-mobile">
+    <p>Просмотр PDF на мобильных устройствах может быть неудобен.</p>
+    <a href="{{ url_for('static', filename='uploads/ideas/files/' ~ idea.file) }}" target="_blank" class="download-btn">
+      Открыть PDF в отдельном приложении
+    </a>
+  </div>
+
+</div>
+
+<style>
+.pdf-viewer-container {
+  width: 100%;
+  max-width: 650px; /* максимум для ПК */
+  height: auto; /* фиксированная высота для iframe */
+  margin: 0 auto;
+}
+
+object, iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Скрываем мобайл блок на ПК */
+.pdf-viewer-mobile {
+  display: none;
+}
+
+/* Для мобильных - скрываем iframe, показываем кнопку */
+@media (pointer: coarse) and (max-width: 768px) {
+  .pdf-viewer-desktop {
+    display: none;
+  }
+  .pdf-viewer-mobile {
+    display: block;
+    text-align: center;
+    padding: 20px;
+  }
+}
+
+
+</style>
+    </div>
+
+    <div class="info-idea-one">
+      <h2>{{ idea.name }}</h2>
+      <p class="description">{{ idea.description }}</p>
+
+            {% if idea.tags %}
+      <span><strong>Теги:</strong>
+        {% for tag in idea.tags.split(',') %}
+          {% if tag.strip() %}  {# Проверка на пустую ссылку #}
+          <span class="tag">#{{ tag.strip() }}</span>
+          {% endif %}
+        {% endfor %}
+      </span>
+      {% endif %}
+
+<div class="votes">
+            <button class="like-btn" data-id="{{ idea.id }}"><img src="{{ url_for('static', filename='images/like-new.png') }}"></button>
+            <span id="likes-{{ idea.id }}" class="votes-score">{{ idea.likes or 0 }}</span> &nbsp;
+            <button class="dislike-btn" data-id="{{ idea.id }}"><img src="{{ url_for('static', filename='images/like-new.png') }}"></button>
+            <span id="dislikes-{{ idea.id }}" class="votes-score">{{ idea.dislikes or 0 }}</span>
+          </div>
+<br>
+<hr style="width: 100%;border: 0.5px solid rgb(255, 255, 255);">
+
+      <p>
+        <strong>Ссылки:</strong> <br>
+
+        {% if idea.links is string %}
+          {% for link in idea.links.split(',') %}
+            <a href="{{ link.strip() }}" target="_blank" class="link">{{ link.strip() }}</a><br>
+          {% endfor %}
+        {% else %}
+          <p>Ссылок нет</p>
+        {% endif %}
+
+      </p>
+    </div>
+  </div>
+
+  <div class="under-info">
+
+<div class="under-info-part">
+    <div style="margin-top: 10px; text-align: right;">
+    <a href="{{ url_for('static', filename='uploads/ideas/files/' ~ idea.file) }}" download class="download-btn">
+      📥 Скачать файл
+    </a>
+  </div>
+  <div style="margin-top: 10px; text-align: right;">
+  <a href="{{ url_for('static', filename='uploads/ideas/files/' ~ idea.file) }}" target="_blank" class="fullscreen-btn">
+    <img src="{{ url_for('static', filename='images/open-full.png') }}">
+    
+  </a>
+</div>
+</div>
+
+<div class="under-info-part">
+<a href="{{ url_for('idea.open') }}">В банк идей</a>
+</div>
+
+  </div>
+</div>
+<br><br>
+
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const userVotes = {}; // храним голоса по id идеи: 'like', 'dislike' или null
+
+          document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+              event.stopPropagation();
+              const id = btn.dataset.id;
+              handleVote(id, 'like', btn);
+            });
+          });
+
+          document.querySelectorAll('.dislike-btn').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+              event.stopPropagation();
+              const id = btn.dataset.id;
+              handleVote(id, 'dislike', btn);
+            });
+          });
+
+          function handleVote(id, type, btn) {
+            const likeBtn = document.querySelector(`.like-btn[data-id="${id}"]`);
+            const dislikeBtn = document.querySelector(`.dislike-btn[data-id="${id}"]`);
+
+            const currentVote = userVotes[id] || null;
+
+            let action = null;
+
+            if (currentVote === type) {
+              // снимаем голос
+              userVotes[id] = null;
+              action = `un${type}`; // 'unlike' или 'undislike'
+              btn.classList.remove('active');
+              if (type === 'like') {
+                dislikeBtn.disabled = false;
+              } else {
+                likeBtn.disabled = false;
+              }
+            } else {
+              // ставим голос
+              userVotes[id] = type;
+              action = type;
+              if (type === 'like') {
+                likeBtn.classList.add('active');
+                dislikeBtn.disabled = true;
+                dislikeBtn.classList.remove('active');
+              } else {
+                dislikeBtn.classList.add('active');
+                likeBtn.disabled = true;
+                likeBtn.classList.remove('active');
+              }
+            }
+            console.log("Sending vote:", action, "for idea ID:", id);
+            fetch(`/ideas/vote/${id}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+              },
+              body: JSON.stringify({ action: action })
+            })
+            .then(res => res.json())
+            .then(data => {
+              document.getElementById(`likes-${id}`).textContent = data.likes;
+              document.getElementById(`dislikes-${id}`).textContent = data.dislikes;
+            });
+          }
+        });
+      </script>
+
+{% endblock %}
+

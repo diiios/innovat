@@ -1,0 +1,311 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Просмотр ресурса - {{ resource.name }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ideas.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resources.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="nav">
+  <a href="{{ url_for('main.index') }}">Главная > </a>
+  <a href="{{ url_for('resource.open') }}"> Продвигаемся в освоении ресурсов. Пробные уроки > </a>
+  <a href="#">{{ resource.name }}</a>
+</div>
+
+<div class="main-box">
+        <!-- <h2>{{ resource.name }}</h2>
+
+  <div class="one-resources" style="width: 60%; margin-left: 20%;">
+    <div class="pdf-viewer-container pdf-resources-one">
+
+<iframe src="{{ url_for('static', filename='uploads/resources/' ~ resource.id ~ '/' ~ resource.file) }}"
+        title="Просмотр PDF: {{ resource.name }}"
+        class="pdf-same-file">
+  Ваш браузер не поддерживает встроенный просмотр PDF.
+  Пожалуйста,
+  <a href="{{ url_for('static', filename='uploads/resources/' ~ resource.id ~ '/' ~ resource.file) }}">
+    скачайте файл
+  </a>.
+</iframe>
+
+    </div>
+
+    <div class="info-resources-one">
+<br>
+          <div class="votes">
+            <button class="like-btn" data-id="{{ resource.id }}"><img src="{{ url_for('static', filename='images/like.png') }}"></button>
+            <span id="likes-{{ resource.id }}">{{ resource.likes or 0 }}</span>
+            <button class="dislike-btn" data-id="{{ resource.id }}"><img src="{{ url_for('static', filename='images/like.png') }}"></button>
+            <span id="dislikes-{{ resource.id }}">{{ resource.dislikes or 0 }}</span>
+          </div>
+
+  <hr> -->
+  <br><br>
+    <div class="one-idea">
+    <div class="pdf-viewer-container pdf-idea-one">
+
+      <iframe src="{{ url_for('static', filename='uploads/resources/' ~ resource.id ~ '/' ~ resource.file) }}" title="Просмотр PDF: {{ resource.name }}" class="pdf-same-file">
+        Ваш браузер не поддерживает встроенный просмотр PDF.
+        Пожалуйста, <a href="{{ url_for('static', filename='uploads/resources/' ~ resource.id ~ '/' ~ resource.file) }}">скачайте файл</a>.
+      </iframe>
+
+    </div>
+
+    <div class="info-idea-one">
+      <h2>{{ resource.name }}</h2>
+      <h4>{{ resource.dop }}</h4>
+      <p class="description">{{ resource.description }}</p>
+
+            
+<div class="votes">
+    <button class="like-btn" data-id="{{ resource.id }}"><img src="{{ url_for('static', filename='images/like-new.png') }}"></button>
+    <span id="likes-{{ resource.id }}" class="votes-score">{{ resource.likes or 0 }}</span> &nbsp;
+    <button class="dislike-btn" data-id="{{ resource.id }}"><img src="{{ url_for('static', filename='images/like-new.png') }}"></button>
+    <span id="dislikes-{{ resource.id }}" class="votes-score">{{ resource.dislikes or 0 }}</span>
+  </div>
+
+<!-- <hr style="width: 100%;border: 0.5px solid rgb(255, 255, 255);"> -->
+
+    </div>
+  </div>
+
+  <div class="under-info">
+
+<div class="under-info-part">
+    <div style="margin-top: 10px; text-align: right;">
+    <a href="{{ url_for('static', filename='uploads/resources/' ~ resource.id ~ '/' ~ resource.file) }}" download class="download-btn">
+      📥 Скачать файл
+    </a>
+  </div>
+  <div style="margin-top: 10px; text-align: right;">
+  <a href="{{ url_for('static', filename='uploads/resources/' ~ resource.id ~ '/' ~ resource.file) }}" target="_blank" class="fullscreen-btn">
+    <img src="{{ url_for('static', filename='images/open-full.png') }}">
+    
+  </a>
+</div>
+</div>
+
+<div class="under-info-part">
+<a href="{{ url_for('resource.open') }}">К другим пробным урокам</a>
+</div>
+
+  </div>
+
+<br>
+ <h1>Тест по материалам урока</h1>
+ <p style="text-align: center; font-size:larger; font-weight: 200;">Пройдите тест и проверьте, насколько усвоены новые знания и навыки</p>
+
+ <div class="test-block">
+  <div class="top-test">
+    <span class="question-counter2">Вопрос 1</span>
+  <div class="question-counter"> <span style="color:#06A5EA">1</span> / 15</div>
+  </div>
+
+  <div class="main-test">
+    <div class="a">{{ resource.test|safe }}</div>
+  
+     <div class="b"><button class="next-question">Далее</button></div>
+  </div>
+
+  <span class="last-inf">Верите вариант ответа и переходите к следующему вопросу.</span>
+</div>
+
+<div class="rezalt-close"></div>
+<div class="rezalt-block">
+  <h2>Вы прошли тест:</h2>
+  <p>{{ resource.name }}</p>
+  <h2>Результат</h2>
+  <p class="rezalt-block-p"> </p> 
+
+  <span>Выбирайте новые пробные уроки и осваивайте новые знания. </span>  <br>
+  <button class="rezalt-block-but">Выйти</button>
+</div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const userVotes = {}; // храним голоса по id идеи: 'like', 'dislike' или null
+
+          document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+              event.stopPropagation();
+              const id = btn.dataset.id;
+              handleVote(id, 'like', btn);
+            });
+          });
+
+          document.querySelectorAll('.dislike-btn').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+              event.stopPropagation();
+              const id = btn.dataset.id;
+              handleVote(id, 'dislike', btn);
+            });
+          });
+
+          function handleVote(id, type, btn) {
+            const likeBtn = document.querySelector(`.like-btn[data-id="${id}"]`);
+            const dislikeBtn = document.querySelector(`.dislike-btn[data-id="${id}"]`);
+
+            const currentVote = userVotes[id] || null;
+
+            let action = null;
+
+            if (currentVote === type) {
+              // снимаем голос
+              userVotes[id] = null;
+              action = `un${type}`; // 'unlike' или 'undislike'
+              btn.classList.remove('active');
+              if (type === 'like') {
+                dislikeBtn.disabled = false;
+              } else {
+                likeBtn.disabled = false;
+              }
+            } else {
+              // ставим голос
+              userVotes[id] = type;
+              action = type;
+              if (type === 'like') {
+                likeBtn.classList.add('active');
+                dislikeBtn.disabled = true;
+                dislikeBtn.classList.remove('active');
+              } else {
+                dislikeBtn.classList.add('active');
+                likeBtn.disabled = true;
+                likeBtn.classList.remove('active');
+              }
+            }
+
+            fetch(`/resources/vote/${id}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+              },
+              body: JSON.stringify({ action: action })
+            })
+            .then(res => res.json())
+            .then(data => {
+              document.getElementById(`likes-${id}`).textContent = data.likes;
+              document.getElementById(`dislikes-${id}`).textContent = data.dislikes;
+            });
+          }
+        });
+      </script>
+
+<script>
+let counter = 0;
+let current = 0;
+let answered = false;
+
+const questions = document.querySelectorAll('.one-question');
+const nextButton = document.querySelector('.next-question');
+const getResultButton = document.querySelector('.get-rezalt');
+const questionCounter = document.querySelector('.question-counter');
+const questionCounter2 = document.querySelector('.question-counter2');
+
+const rezaltBlock = document.querySelector('.rezalt-block');
+const rezaltCloze = document.querySelector('.rezalt-close');
+const rezaltP = document.querySelector('.rezalt-block-p');
+const rezaltClozeButton = document.querySelector('.rezalt-block-but');
+
+// Скрываем все вопросы, кроме первого
+questions.forEach((q, i) => {
+  q.style.display = (i === 0) ? 'flex' : 'none';
+});
+
+// Обновляем счётчик вопросов
+function updateQuestionCounter() {
+  questionCounter.innerHTML = ` <bold style="color:#06A5EA">${current + 1}</bold> / ${questions.length}`;
+  questionCounter2.innerHTML = `Вопрос ${current + 1} `;
+}
+updateQuestionCounter();
+
+// Прячем кнопку "Узнать ответ"
+getResultButton.style.display = 'none';
+
+// Назначаем обработчики на кнопки ответов
+for (let q of questions) {
+  const buttons = q.querySelectorAll('button');
+  for (let btn of buttons) {
+    btn.addEventListener('click', function () {
+      if (answered) return;
+
+      const parent = btn.closest('.one-question');
+      const allBtns = parent.querySelectorAll('button');
+
+      for (let b of allBtns) {
+        b.disabled = true;
+      }
+
+      if (btn.value % 3 === 0 && btn.value % 4 === 0) {
+        counter++;
+        // btn.style.backgroundColor = 'green';
+
+        btn.classList.add('good');
+      } else {
+        // btn.style.backgroundColor = 'red';
+
+        btn.classList.add('bad');
+      }
+
+      answered = true;
+    });
+  }
+}
+
+// Кнопка "Далее ->"
+nextButton.addEventListener('click', function () {
+  if (!answered) return;
+
+  // Скрываем текущий вопрос
+  questions[current].style.display = 'none';
+  current++;
+
+  if (current < questions.length) {
+    // Показываем следующий вопрос
+    questions[current].style.display = 'flex';
+    answered = false;
+    updateQuestionCounter();
+  }
+
+  if (current === questions.length - 1) {
+    // Последний вопрос
+    nextButton.style.display = 'none';
+    getResultButton.style.display = 'inline-block';
+    updateQuestionCounter();
+  }
+});
+
+// Узнать результат
+getResultButton.addEventListener('click', function () {
+  const total = questions.length;
+  const percent = (counter / total) * 100;
+  let message = "";
+
+  if (percent < 30) {
+    message = "Попробуйте ещё раз — вы можете лучше!";
+  } else if (percent < 80) {
+    message = "Неплохо, но есть куда стремиться.";
+  } else {
+    message = "Отличный результат! Так держать!";
+  }
+
+  rezaltP.innerHTML = `
+    <strong>Правильных ответов:</strong> ${counter} из ${total}<br><br>
+    <span style="font-size:18px">${message}</span>
+  `;
+  
+  rezaltBlock.style.display = "block";
+  rezaltCloze.style.display = "block";
+});
+
+rezaltClozeButton.addEventListener('click', function () {
+  rezaltBlock.style.display = "none";
+  rezaltCloze.style.display = "none";
+});
+</script>
+    </div>
+  </div>
+</div>
+{% endblock %}
