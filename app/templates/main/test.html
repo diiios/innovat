@@ -1,0 +1,286 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/test.css') }}">
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/resources.css') }}"> -->
+{% endblock %}
+
+{% block content %}
+<div class="nav">
+  <a href="{{ url_for('main.index') }}">Главная > </a>
+  <a href="#"> Тестовая диагностика цифровой компетентности педагога </a>
+</div>
+
+ <h1>Тестовая диагностика <br> цифровой компетентности педагога</h1>
+ <p>На основе диагностики предложим конкретные разделы,<br> чтобы овладеть необходимыми навыками в кратчайшие сроки.</p>
+
+ <div class="test-block">
+  <div class="top-test">
+    <span class="question-counter2">Вопрос 1</span>
+  <div class="question-counter"> <span style="color:#06A5EA">1</span> / 15</div>
+  </div>
+
+  <div class="main-test">
+    <div class="a">
+
+        <div class="one-question" data-question="1">
+          <div>
+            <h1>Столица Франции?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>На основе диагностики предложим конкретные разделы,чтобы овладеть необходимыми навыками в кратчайшие сроки.</button><button>лондон</button><button>Париж</button>
+        </div>
+        
+        <div class="one-question" data-question="2">
+          <div>
+            <h1>Сколько континентов на Земле?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>5</button><button>7</button><button>6</button>
+        </div>
+        
+        <div class="one-question" data-question="3">
+          <div>
+            <h1>Кто написал «Преступление и наказание»?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Пушкин</button><button>Достоевский</button><button>Толстой</button>
+        </div>
+        
+        <div class="one-question" data-question="4">
+          <div>
+            <h1>Самая длинная река в мире?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Амазонка</button><button>Нил</button><button>Янцзы</button>
+        </div>
+        
+        <div class="one-question" data-question="5">
+          <div>
+            <h1>Сколько планет в Солнечной системе?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>8</button><button>8</button><button>9</button>
+        </div>
+        
+        <div class="one-question" data-question="6">
+          <div>
+            <h1>Что тяжелее: 1 кг железа или 1 кг ваты?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Железо</button><button>Одинаково</button><button>Вата</button>
+        </div>
+        
+        <div class="one-question" data-question="7">
+          <div>
+            <h1>Кто изобрёл лампу накаливания?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Эйнштейн</button><button>Эдисон</button><button>Ньютон</button>
+        </div>
+        
+        <div class="one-question" data-question="8">
+          <div>
+            <h1>Какой химический элемент обозначается как O?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Олово</button><button>Кислород</button><button>Золото</button>
+        </div>
+        
+        <div class="one-question" data-question="9">
+          <div>
+            <h1>Какой язык программирования используется для веб-страниц?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>C++</button><button>Java</button><button>JavaScript</button>
+        </div>
+        
+        <div class="one-question" data-question="10">
+          <div>
+            <h1>Сколько градусов в прямом угле?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>180</button><button>90</button><button>45</button>
+        </div>
+        
+        <div class="one-question" data-question="11">
+          <div>
+            <h1>Какой океан самый большой?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Атлантический</button><button>Индийский</button><button>Тихий</button>
+        </div>
+        
+        <div class="one-question" data-question="12">
+          <div>
+            <h1>Кто первый полетел в космос?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Нил Армстронг</button><button>Юрий Гагарин</button><button>Леонов</button>
+        </div>
+        
+        <div class="one-question" data-question="13">
+          <div>
+            <h1>Самая высокая гора в мире?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Килиманджаро</button><button>Эверест</button><button>Эльбрус</button>
+        </div>
+        
+        <div class="one-question" data-question="14">
+          <div>
+            <h1>Какой цвет получается при смешивании синего и жёлтого?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>Оранжевый</button><button>Зелёный</button><button>Фиолетовый</button>
+        </div>
+        
+        <div class="one-question" data-question="15">
+          <div>
+            <h1>В каком году началась Вторая мировая война?</h1>
+            <h2>Варианты ответов</h2>
+          </div>
+          <button>1945</button><button>1939</button><button>1914</button>
+        </div>
+        
+
+    <button class="get-rezalt">
+      Узнать ответ
+    </button>
+    
+    </div>
+  
+     <div class="b"><button class="next-question">Далее</button></div>
+  </div>
+
+  <span class="last-inf">Верите вариант ответа и переходите к следующему вопросу.</span>
+</div>
+
+<div class="rezalt-close"></div>
+<div class="rezalt-block">
+  <h2>Вы прошли тест:</h2>
+  <p>ООО</p>
+  <h2>Результат</h2>
+  <p class="rezalt-block-p"> </p> 
+
+  <span>Выбирайте новые пробные уроки и осваивайте новые знания. </span>  <br>
+  <button class="rezalt-block-but">Выйти</button>
+</div>
+
+<br>
+<script>
+let current = 0;
+let answered = false;
+
+// Все вопросы
+const questions = document.querySelectorAll('.one-question');
+const nextButton = document.querySelector('.next-question');
+const getResultButton = document.querySelector('.get-rezalt');
+const questionCounter = document.querySelector('.question-counter');
+const questionCounter2 = document.querySelector('.question-counter2');
+
+const rezaltBlock = document.querySelector('.rezalt-block');
+const rezaltCloze = document.querySelector('.rezalt-close');
+const rezaltP = document.querySelector('.rezalt-block-p');
+const rezaltClozeButton = document.querySelector('.rezalt-block-but');
+
+// Скрываем все вопросы, кроме первого
+questions.forEach((q, i) => {
+  q.style.display = i === 0 ? 'flex' : 'none';
+});
+
+// Обновляем счётчик вопросов
+function updateQuestionCounter() {
+  questionCounter.innerHTML = `<bold style="color:#06A5EA">${current + 1}</bold> / ${questions.length}`;
+  questionCounter2.innerHTML = `Вопрос ${current + 1} `;
+}
+updateQuestionCounter();
+
+// Скрываем кнопку "Узнать ответ" в начале
+getResultButton.style.display = 'none';
+
+// Объект для хранения ответов
+const answers = {};
+
+// Обработчики на кнопки ответов
+questions.forEach((q) => {
+  const buttons = q.querySelectorAll('button');
+  const questionNumber = q.getAttribute('data-question');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (answered) return;
+
+      // Сохраняем выбранный ответ
+      answers[questionNumber] = btn.textContent.trim();
+
+      // Подсвечиваем выбранный ответ зелёным
+      btn.classList.add('good');
+
+      // Отключаем остальные кнопки вопроса
+      buttons.forEach(b => b.disabled = true);
+
+      answered = true;
+    });
+  });
+});
+
+// Кнопка "Далее ->"
+nextButton.addEventListener('click', () => {
+  if (!answered) return;
+
+  // Скрываем текущий вопрос
+  questions[current].style.display = 'none';
+  current++;
+
+  if (current < questions.length) {
+    // Показываем следующий вопрос
+    questions[current].style.display = 'flex';
+    answered = false;
+    updateQuestionCounter();
+  }
+
+  if (current === questions.length - 1) {
+    nextButton.style.display = 'none';
+    getResultButton.style.display = 'inline-block';
+    updateQuestionCounter();
+  }
+});
+
+// Кнопка "Узнать ответ" (здесь просто показываем сохранённые ответы)
+getResultButton.addEventListener('click', () => {
+  // Сохраняем ответы в localStorage
+  localStorage.setItem('surveyAnswers', JSON.stringify(answers));
+
+  // Формируем текст для вывода
+  let resultText = '<h3>Ваши ответы:</h3><ul>';
+  for (const [qNum, answer] of Object.entries(answers)) {
+    resultText += `<li>Вопрос ${qNum}: ${answer}</li>`;
+  }
+  resultText += '</ul>';
+
+  rezaltP.innerHTML = resultText;
+
+  rezaltBlock.style.display = 'block';
+  rezaltCloze.style.display = 'block';
+
+  // Выводим в консоль ответы
+  console.log("Ответы пользователя:", answers);
+});
+
+// Закрытие блока с результатами
+rezaltClozeButton.addEventListener('click', () => {
+  rezaltBlock.style.display = 'none';
+  rezaltCloze.style.display = 'none';
+});</script>
+    </div>
+  </div>
+</div>
+
+  {% endblock %}
